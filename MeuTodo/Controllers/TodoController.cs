@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MeuTodo.Data;
 using MeuTodo.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace MeuTodo.Controllers
@@ -9,7 +10,8 @@ namespace MeuTodo.Controllers
     {
         [HttpGet]
         [Route("todos")]
-        public List<Todo> Get()
+        public List<Todo> Get(
+            [FromServices] AppDbContext context)
         {
             return new List<Todo>();
 
