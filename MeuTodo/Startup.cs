@@ -33,8 +33,8 @@ namespace MeuTodo
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "Default",
-                    pattern: "{Controller=Home}/{action=Index}/{Id?}");
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
