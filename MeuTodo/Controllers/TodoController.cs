@@ -9,7 +9,7 @@ using MeuTodo.Models;
 namespace MeuTodo.Controllers
 {
     [ApiController]
-    [Route(template:"v1")]
+    [Route(template: "v1")]
     public class TodoController : ControllerBase
     {
         [HttpGet]
@@ -28,14 +28,14 @@ namespace MeuTodo.Controllers
         [Route("todos/{id}")]
         public async Task<IActionResult> GetByIdAsync(
            [FromServices] AppDbContext context,
-           [FromRoute]int id)
+           [FromRoute] int id)
         {
             var todo = await context
                 .Todos
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
             return todo == null
-                ? NotFound() 
+                ? NotFound()
                 : Ok(todo);
 
         }
@@ -65,7 +65,7 @@ namespace MeuTodo.Controllers
                 return BadRequest();
             }
 
-           
+
         }
         [HttpPut("todos/{id}")]
         public async Task<IActionResult> PutAsync(
@@ -93,6 +93,29 @@ namespace MeuTodo.Controllers
                 return Ok(todo);
             }
             catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+        [HttpDelete("todos/{id}")]
+        public async Task<IActionResult> DeleteAsync(
+        [FromServices] AppDbContext context,
+        [FromRoute] int id)
+        {
+
+            var todo = await context
+                .Todos
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            try
+            {
+                context.Todos.Remove(todo);
+                await context.SaveChangesAsync();
+                return Ok();
+
+
+            }
+            catch(Exception e)
             {
                 return BadRequest();
             }
